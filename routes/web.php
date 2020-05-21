@@ -17,8 +17,8 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
     $query = http_build_query([
-        'client_id' => 3, // Replace with Client ID
-        'redirect_uri' => 'http://127.0.0.1:8001/callback',
+        'client_id' => env('LARAOAUTH_CLIENT_ID'), // Replace with Client ID
+        'redirect_uri' => env('LARAOAUTH_REDIRECT_URI'),
         'response_type' => 'code',
         'scope' => ''
     ]);
@@ -30,8 +30,8 @@ Route::get('/callback', function (Request $request) {
     $response = (new GuzzleHttp\Client)->post('http://127.0.0.1:8000/oauth/token', [
         'form_params' => [
             'grant_type' => 'authorization_code',
-            'client_id' => 3, // Replace with Client ID
-            'client_secret' => '2yGIIfBhdok367veWRHTNHUNachGaL5sqkUYjWzF', // Replace with client secret
+            'client_id' => env('LARAOAUTH_CLIENT_ID'), // Replace with Client ID
+            'client_secret' => env('LARAOAUTH_CLIENT_SECRET'), // Replace with client secret
             'redirect_uri' => 'http://127.0.0.1:8001/callback',
             'code' => $request->code,
         ]
